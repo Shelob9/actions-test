@@ -1,0 +1,29 @@
+name: Build zip
+on:
+  release:
+    types: [published]
+jobs:
+  tag:
+    name: New release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install
+      run: |
+        # Composer install optimized
+        composer install --no-dev -o
+    - name: Build ZIP
+      id: deploy
+      uses: shelob9/action-wordpress-plugin-deploy@build
+      with:
+        generate-zip: true
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{github.workspace}}/${{ github.event.repository.name }}.zip
+        asset_name: ${{ github.event.repository.name }}.zip
+        asset_content_type: application/zip
