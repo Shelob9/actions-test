@@ -18,12 +18,13 @@ jobs:
       uses: shelob9/action-wordpress-plugin-deploy@build
       with:
         generate-zip: true
+    ## https://github.com/actions/upload-release-asset#example-workflow---upload-a-release-asset
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ${{github.workspace}}/
         asset_name: ${{ github.event.repository.name }}.zip
+        asset_path: ./${{ github.event.repository.name }}.zip
         asset_content_type: application/zip
