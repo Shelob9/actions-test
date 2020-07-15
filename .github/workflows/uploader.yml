@@ -1,8 +1,6 @@
-# This is a basic workflow to help you get started with Actions
 name: Uploader
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
-on: [push, pull_request]
+on: [push, pull_request, release]
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -12,20 +10,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, Roys!
-      id: 1a
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: readme.txt
-        asset_name: readme.txt
-        tag: ${{ github.GITHUB_SHA }}
-        overwrite: true
-        body: "Hello release text"
-     
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, Roys!
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: readme.txt
+          asset_name: readme.txt
+          tag: ${{ github.GITHUB_SHA }}
+          overwrite: true
+          body: "Hello release text"
