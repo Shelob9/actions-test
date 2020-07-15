@@ -20,4 +20,13 @@ jobs:
           files: src/ actions-test.php
           recursive: true
           dest: actions-test.zip
-      
+  zip2:
+    name: ZIP2
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'r-2.zip'
+        exclusions: '*.git* /*node_modules/* .editorconfig tests/* bin/*'
