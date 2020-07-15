@@ -13,17 +13,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      #
-      - name: Zip
+      - name: Create ZIP
         uses: papeloto/action-zip@v1
         with:
           files: src/ actions-test.php
           recursive: false
           dest: actions-test-${{ github.ref }}.zip
-      - name: Upload binaries to release
+
+      - name: Upload ZIP to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: actions-test-${{ github.ref }}.zip
           tag: ${{ github.ref }}
-
