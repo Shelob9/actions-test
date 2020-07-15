@@ -1,19 +1,4 @@
 name: Uploader
-on: [push, pull_request, release]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      name: Publish
-
 on:
   push:
     tags:
@@ -23,25 +8,24 @@ jobs:
   build:
     name: Publish binaries
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: composer install --no-dev -o
-    # Make a ZIP
-    - name: Upload binaries to release
-    uses: papeloto/action-zip@v1
-    with:
-      files: src/ actions-test.php
-      recursive: true
-      dest: actions-test.zip
-    - name: Upload ZIP to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: actions-test.zip
-        asset_name: actions-test-${{ github.ref }}.zip
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "Release was generated at commit ${{github.sha}}"
+      - uses: actions/checkout@v2
+      - name: Build
+        run: composer install --no-dev -o
+      # Make a ZIP
+      - name: Upload binaries to release
+        uses: papeloto/action-zip@v1
+        with:
+          files: src/ actions-test.php
+          recursive: true
+          dest: actions-test.zip
+      - name: Upload ZIP to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: actions-test.zip
+          asset_name: actions-test-${{ github.ref }}.zip
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Release was generated at commit ${{github.sha}}"
       
