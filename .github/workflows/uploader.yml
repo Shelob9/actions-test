@@ -9,14 +9,16 @@ jobs:
     name: Publish binaries
     runs-on: ubuntu-latest
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Build
+      # Install
+      - name: composer
         run: composer install --no-dev -o
       # Make a ZIP
       - name: Upload binaries to release
       - uses: papeloto/action-zip@v1
         with:
-          files: src/ actions-test.php
+          files: vendor/ src/ actions-test.php
           recursive: true
           dest: actions-test.zip
         # Upload to release
