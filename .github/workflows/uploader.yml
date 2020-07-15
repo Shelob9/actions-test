@@ -22,11 +22,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: echo Hello, Roys!
-    - name: easy zip
-      uses: papeloto/action-zip@v1
-      with:
-        files: src/ actions-test.php
-        recursive: true
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
