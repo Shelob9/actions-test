@@ -1,14 +1,14 @@
 name: Uploader
-on: [push, pull_request, release]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+on:
+  push:
+    tags:
+      - "*"
+
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    name: Publish binaries
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -20,3 +20,18 @@ jobs:
           files: src/ actions-test.php
           recursive: true
           dest: actions-test.zip
+      - uses: actions/checkout@v2
+      - name: Build
+        run: composer install --no-dev -o
+      # Make a ZIP
+      - name: Upload binaries to release
+        uses: papeloto/action-zip@v1
+        with:
+          files: src/ actions-test.php
+          recursive: true
+          dest: actions-test.zip
+      - name: Upload ZIP to release
+      - uses: actions/upload-artifact@v1
+        with:
+          name: actions-test.zip
+          path: ${{ github.workspace }}/actions-test.zip.zip
