@@ -25,4 +25,4 @@ jobs:
           asset_name: readme.txt
           tag: ${{ github.GITHUB_SHA }}
           overwrite: true
-          body: "Hello release text"
+          body: "Hello release text!"
