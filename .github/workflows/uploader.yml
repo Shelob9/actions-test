@@ -19,9 +19,9 @@ jobs:
           files: src/ actions-test.php
           recursive: true
           dest: actions-test.zip
-
+        # Upload to release
       - name: Upload ZIP to release
       - uses: actions/upload-artifact@v1
         with:
           name: actions-test.zip
-          path: ${{ github.workspace }}/actions-test.zip.zip
+          path: ${{ github.workspace }}/actions-test.zip
