@@ -2,7 +2,7 @@ name: Uploader
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   build:
@@ -19,13 +19,9 @@ jobs:
           files: src/ actions-test.php
           recursive: true
           dest: actions-test.zip
+
       - name: Upload ZIP to release
-        uses: svenstaro/upload-release-action@v2
+      - uses: actions/upload-artifact@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: actions-test.zip
-          asset_name: actions-test-${{ github.ref }}.zip
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "Release was generated at commit ${{github.sha}}"
-      
+          name: actions-test.zip
+          path: ${{ github.workspace }}/actions-test.zip.zip
