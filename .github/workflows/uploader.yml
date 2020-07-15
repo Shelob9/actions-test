@@ -24,14 +24,19 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: echo Hello, world!
-
+      run: echo Hello, Roys!
+    - name: easy zip
+      uses: papeloto/action-zip@v1
+      with:
+        files: src/ actions-test.php
+        recursive: true
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: readme.txt
-        asset_name: mything
-        tag: ${{ github.ref }}
+        asset_name: readme.txt
+        tag: ${{ github.GITHUB_SHA }}
         overwrite: true
         body: "Hello release text"
+     
